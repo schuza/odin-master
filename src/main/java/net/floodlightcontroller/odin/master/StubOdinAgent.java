@@ -11,9 +11,9 @@ import net.floodlightcontroller.odin.master.OdinClient;
 import net.floodlightcontroller.util.MACAddress;
 
 /**
- * 
- * Stub OdinAgent class to be used for testing. 
- * 
+ *
+ * Stub OdinAgent class to be used for testing.
+ *
  * @author Lalith Suresh <suresh.lalith@gmail.com>
  *
  */
@@ -23,7 +23,7 @@ class StubOdinAgent implements IOdinAgent {
 	private InetAddress ipAddr = null;
 	private long lastHeard;
 	private ConcurrentSkipListSet<OdinClient> clientList = new ConcurrentSkipListSet<OdinClient>();
-	
+
 	@Override
 	public void addClientLvap(OdinClient oc) {
 		clientList.add(oc);
@@ -52,7 +52,7 @@ class StubOdinAgent implements IOdinAgent {
 	@Override
 	public int init(InetAddress host) {
 		this.ipAddr = host;
-		
+
 		return 0;
 	}
 
@@ -69,8 +69,8 @@ class StubOdinAgent implements IOdinAgent {
 
 	public long getLastHeard () {
 		return lastHeard;
-	} 
-	
+	}
+
 	public void setLastHeard (long t) {
 		this.lastHeard = t;
 	}
@@ -86,7 +86,7 @@ class StubOdinAgent implements IOdinAgent {
 	}
 
 	@Override
-	public void updateClientLvap(OdinClient oc) {		
+	public void updateClientLvap(OdinClient oc) {
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class AgentManagerResource extends ServerResource {
     public Set<InetAddress> retreive() {
     	OdinMaster oc = (OdinMaster) getContext().getAttributes().
         					get(OdinMaster.class.getCanonicalName());
-    	
+
     	return oc.getAgentAddrs(PoolManager.GLOBAL_POOL);
     }
 }

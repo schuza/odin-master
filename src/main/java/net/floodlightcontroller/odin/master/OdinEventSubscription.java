@@ -4,14 +4,14 @@ import net.floodlightcontroller.util.MACAddress;
 
 
 /**
- * 
+ *
  * Odin Applications should use instances of this class to express
  * subscription requests. One instance of this class represents
  * a single subscription request against a single statistic.
- * 
+ *
  * FIXME: The application should ensure it doesn't install the same
  * subscription twice.
- * 
+ *
  * @author Lalith Suresh <suresh.lalith@gmail.com>
  *
  */
@@ -23,12 +23,12 @@ public class OdinEventSubscription {
 	    GREATER_THAN,
 	    LESSER_THAN,
 	};
-	
+
 	private String client;
 	private String statistic;
 	private Relation relation;
 	private double value;
-	
+
 	/**
 	 * @return the client
 	 */
@@ -42,7 +42,7 @@ public class OdinEventSubscription {
 	public String getStatistic() {
 		return statistic;
 	}
-	
+
 	/**
 	 * @return the relation
 	 */
@@ -56,12 +56,12 @@ public class OdinEventSubscription {
 	public double getValue() {
 		return value;
 	}
-	
+
 	/**
-	 * Sets a subscription for an event, defined per client (or 
+	 * Sets a subscription for an event, defined per client (or
 	 * for all clients using *), for a particular statistic that
 	 * satisfies a particular relation with a defined value.
-	 * 
+	 *
 	 * @param client client to be matched against. Should be a valid MAC addrress or wild-card.
 	 * @param statistic any string which is a statistic. This field will be ignored by agents
 	 * 		  which do not understand the requested statistic.
@@ -77,7 +77,7 @@ public class OdinEventSubscription {
 				throw new IllegalArgumentException();
 			}
 		}
-		
+
 		this.client = client;
 		this.statistic = stat;
 		this.relation = rel;
