@@ -40,7 +40,7 @@ public interface IOdinAgent {
 	
 	
 	/**
-	 * Retrive Rx-stats from the OdinAgent.
+	 * Retrieve RX-Statistics from the OdinAgent.
 	 * 
 	 *  @return A map of stations' MAC addresses to a map
 	 *  of properties and values.
@@ -49,10 +49,10 @@ public interface IOdinAgent {
 	
 	
 	/**
-	 * To be called only once, intialises a connection to the OdinAgent's
+	 * To be called only once, initializes a connection to the OdinAgent's
 	 * control socket. We let the connection persist so as to save on
 	 * setup/tear-down messages with every invocation of an agent. This
-	 * will also help speedup handoffs. This process can be ignored
+	 * will also help speedup hand-offs. This process can be ignored
 	 * in a mock agent implementation
 	 * 
 	 * @param host Click based OdinAgent host
