@@ -19,6 +19,7 @@ public class Lvap {
 	private final List<String> lvapSsids;
 	private IOdinAgent odinAgent;
 	private List<OFMessage> msgList = new ArrayList<OFMessage>();
+	private boolean assocState;
 
 	Lvap(MACAddress bssid, List<String> ssidList) {
 		lvapBssid = bssid;
@@ -50,4 +51,12 @@ public class Lvap {
 	public void setOFMessageList(List<OFMessage> msglist) {
 		this.msgList = msglist;
 	}
+	public boolean getAssocState() {
+		return assocState;
+	}
+
+	public void setAssocState(boolean state) {
+		this.assocState = state;
+	}
+
 }

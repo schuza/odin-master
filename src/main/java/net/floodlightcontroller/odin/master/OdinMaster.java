@@ -132,6 +132,48 @@ public class OdinMaster implements IFloodlightModule, IOFSwitchListener, IOdinAp
 		}
 	}
 
+	synchronized void receiveDeauth (final InetAddress odinAgentAddr, final MACAddress clientHwAddress) {
+
+		if (clientHwAddress == null || odinAgentAddr == null)
+			return;
+
+		IOdinAgent agent = agentManager.getAgent(odinAgentAddr);
+		OdinClient oc = clientManager.getClient(clientHwAddress);
+
+		if(agent == null)
+			return;
+
+		log.info("Clearing Lvap " + clientHwAddress +
+		" from agent:" + agent.getIpAddress() + " due to deauthentication/inactivity");
+		poolManager.removeClientPoolMapping(oc);
+		agent.removeClientLvap(oc);
+		clientManager.removeClient(clientHwAddress);
+
+	}
+
+	/* This method stops the timer that clears the lvap if an IP is not received for the client */
+	synchronized void receiveAssoc (final InetAddress odinAgentAddr, final MACAddress clientHwAddress) {
+
+		if (clientHwAddress == null || odinAgentAddr == null)
+			return;
+
+		IOdinAgent agent = agentManager.getAgent(odinAgentAddr);
+
+		if(agent == null)
+			return;
+
+		log.info("Client " + clientHwAddress + " completed the association");
+
+		OdinClient oc = clientManager.getClient(clientHwAddress);
+		oc.getLvap().setAssocState(true); //associated;
+
+		//poolManager.removeClientPoolMapping(oc);
+		//agent.removeClientLvap(oc);
+		//clientManager.removeClient(clientHwAddress);
+
+	}
+
+
 	/**
 	 * Handle a probe message from an agent, triggered
 	 * by a particular client.
@@ -849,6 +891,13 @@ public class OdinMaster implements IFloodlightModule, IOFSwitchListener, IOdinAp
 		agentManager.removeAgent(switchIpAddr);
 	}
 
+
+	@Override
+	public Command receive(IOFSwitch sw, OFMessage msg, FloodlightContext cntx) {
+		return Command.CONTINUE;
+	}
+
+	/*
 	@Override
 	public Command receive(IOFSwitch sw, OFMessage msg, FloodlightContext cntx) {
 
