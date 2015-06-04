@@ -47,6 +47,12 @@ public interface IOdinAgent {
 	 */
 	public Map<MACAddress, Map<String, String>> getRxStats ();
 	
+	/**
+	 * Retrieve SpectralScan data from the OdinAgent.
+	 * 
+	 *  @return a byte array with the raw data from
+	 */
+	public byte[] getSpectralScan ();
 	
 	/**
 	 * To be called only once, initializes a connection to the OdinAgent's

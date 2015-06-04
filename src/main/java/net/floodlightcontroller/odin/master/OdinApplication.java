@@ -91,6 +91,17 @@ public abstract class OdinApplication implements Runnable {
 	}
 	
 	/**
+	 * Retreive SpectralScanData from the agent
+	 * 
+	 * @param agentAddr InetAddress of the agent
+	 * 
+	 * @return byte array from Odin Agent pool 
+	 */
+	protected final byte[] getSpectralScanFromAgent (InetAddress agentAddr) {
+		return odinApplicationInterface.getSpectralScanFromAgent(pool, agentAddr);
+	}
+	
+	/**
 	 * Get a list of Odin agents from the agent tracker
 	 * @return a map of OdinAgent objects keyed by Ipv4 addresses
 	 */

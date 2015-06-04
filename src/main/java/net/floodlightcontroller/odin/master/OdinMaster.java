@@ -11,6 +11,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -430,7 +431,14 @@ public class OdinMaster implements IFloodlightModule, IOFSwitchListener, IOdinAp
 	 */
 	@Override
 	public Set<InetAddress> getAgentAddrs (String pool){
-		return poolManager.getAgentAddrsForPool(pool);
+		Set<InetAddress> up = new HashSet<InetAddress>();
+		for (InetAddress addr: poolManager.getAgentAddrsForPool(pool)) {
+			if (agentManager.getAgent(addr) != null) {
+				up.add(addr);
+			}
+		}
+		
+		return up;
 	}
 	
 	
@@ -1023,5 +1031,10 @@ public class OdinMaster implements IFloodlightModule, IOFSwitchListener, IOdinAp
 	private class SubscriptionCallbackTuple {
 		OdinEventSubscription oes;
 		NotificationCallback cb;
+	}
+
+	@Override
+	public byte[] getSpectralScanFromAgent(String pool, InetAddress agentAddr) {
+		return agentManager.getAgent(agentAddr).getSpectralScan();
 	}
 }
