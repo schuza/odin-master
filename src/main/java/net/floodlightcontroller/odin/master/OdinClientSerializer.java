@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.SerializerProvider;
 
 public class OdinClientSerializer extends JsonSerializer<OdinClient> {
 
-	
+
 	@Override
 	public void serialize(OdinClient client, JsonGenerator jgen,
 			SerializerProvider provider) throws IOException,
@@ -29,8 +29,8 @@ public class OdinClientSerializer extends JsonSerializer<OdinClient> {
 		else {
 			jgen.writeStringField("agent", null);
 		}
-			
-		
+
+
 		jgen.writeEndObject();
 	}
 

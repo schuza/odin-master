@@ -18,7 +18,7 @@ public class LvapHandoffResource extends ServerResource {
     public void store(String flowmod) {
     	OdinMaster oc = (OdinMaster) getContext().getAttributes().
         					get(OdinMaster.class.getCanonicalName());
-    	
+
     	ObjectMapper mapper = new ObjectMapper();
 
 		HashMap<String, String> fmdata;
@@ -28,7 +28,7 @@ public class LvapHandoffResource extends ServerResource {
 			String staHwAddress = fmdata.get("clientHwAddress");
 	        String apIpAddress= fmdata.get("apIpAddress");
 	        String poolName = fmdata.get("poolName");
-	    
+
 	        oc.handoffClientToAp(poolName, MACAddress.valueOf(staHwAddress), InetAddress.getByName(apIpAddress));
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
