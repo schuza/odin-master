@@ -93,4 +93,10 @@ class StubOdinAgent implements IOdinAgent {
 	public void sendProbeResponse(MACAddress clientHwAddr, MACAddress bssid,
 			Set<String> ssidLists) {
 	}
+
+	@Override
+	public byte[] getSpectralScan() {
+		// Unimplemented for now
+		return null;
+	}
 }

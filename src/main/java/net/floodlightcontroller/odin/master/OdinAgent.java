@@ -21,6 +21,8 @@ import org.openflow.protocol.action.OFAction;
 import org.openflow.protocol.action.OFActionOutput;
 import org.openflow.util.U16;
 
+import sun.misc.BASE64Decoder;
+
 import java.util.Collections;
 
 import net.floodlightcontroller.core.IOFSwitch;
@@ -29,6 +31,13 @@ import net.floodlightcontroller.util.MACAddress;
 @JsonSerialize(using=OdinAgentSerializer.class)
 class OdinAgent implements IOdinAgent {
 
+	public enum SpectralScanTypes {
+	    bg_ht20_noise, bg_ht20_frame, spectrum_ht20_sweep, bg_ht40_noise, bg_ht40_frame, spectrum_ht40_sweep
+	}
+	
+	private static final byte[] NO_DATA = {};
+
+	
 	// Connect to control socket on OdinAgent
 	private Socket odinAgentSocket = null;
 	private PrintWriter outBuf;
@@ -189,6 +198,38 @@ class OdinAgent implements IOdinAgent {
 		return Collections.unmodifiableMap(ret);
 	}
 
+	
+	/**
+	 * Probe the agent to perform a spectral scan through the ath9k driver 
+	 * 
+	 * @return a byte array of SpectralScan data
+	 */
+	public byte[] getSpectralScan() {
+		SpectralScanTypes type = SpectralScanTypes.spectrum_ht20_sweep;
+		switch (type) {
+		case spectrum_ht20_sweep:
+			invokeWriteHandler(WRITE_HANDLER_SPECTRAL_SCAN, "spectrum_ht20_sweep");
+			break;
+
+		default:
+			return NO_DATA;
+		}
+		
+		
+		String stats = invokeReadHandler(READ_HANDLER_SPECTRAL_SCAN);
+		
+		BASE64Decoder decoder = new BASE64Decoder();
+		byte[] decodedBytes = null;
+		try {
+			decodedBytes = decoder.decodeBuffer(stats);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return decodedBytes;
+	}
+	
 	
 	/**
 	 * To be called only once, initialises a connection to the OdinAgent's
@@ -394,5 +435,5 @@ class OdinAgent implements IOdinAgent {
 		}
 
 		invokeWriteHandler(WRITE_HANDLER_SEND_PROBE_RESPONSE, sb.toString());
-	}
+	}	
 }
